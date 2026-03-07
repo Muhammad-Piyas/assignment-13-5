@@ -3,12 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - GitHub Issues Tracker</title>
+    <title>Assignment Five</title>
+    <!--- Tailwind CSS and daisyUI CDN --->
     <link
-      href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css"
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
       rel="stylesheet"
+      type="text/css"
     />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- favicon -->
+    <link
+      rel="shortcut icon"
+      href="assets/android-chrome-512x512.png"
+      type="image/x-icon"
+    />
+    <!-- Font Awesome CDN -->
+    <script
+      src="https://kit.fontawesome.com/c177988b3a.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body class="bg-[#F3F4F6] flex items-center justify-center min-h-screen">
     <div
@@ -20,6 +33,52 @@
       <h2 class="text-2xl font-bold text-center text-gray-800">
         GitHub Issues Tracker
       </h2>
+      <p class="text-center text-gray-500 text-sm mb-6">
+        Sign in to manage your issues
+      </p>
+      <form id="login-form">
+        <div class="form-control w-full">
+          <label class="label"
+            ><span class="label-text font-semibold">Username</span></label
+          >
+          <input
+            type="text"
+            id="username"
+            placeholder="Enter Username"
+            class="input input-bordered w-full"
+            required
+          />
+        </div>
+        <div class="form-control w-full mt-4">
+          <label class="label"
+            ><span class="label-text font-semibold">Password</span></label
+          >
+          <input
+            type="password"
+            id="password"
+            placeholder="Enter Password"
+            class="input input-bordered w-full"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary w-full mt-8 bg-[#6366F1] border-none text-white hover:bg-[#4F46E5]"
+        >
+          Sign In
+        </button>
+      </form>
+      <div class="divider my-8 italic text-xs text-gray-400">OR</div>
+
+      <div
+        class="bg-gray-50 p-4 rounded-lg text-center text-sm border border-dashed border-gray-200"
+      >
+        <p class="text-gray-400 mb-2 uppercase text-[10px] font-bold">
+          Demo Credentials:
+        </p>
+        <p><strong>Username:</strong> admin</p>
+        <p><strong>Password:</strong> admin123</p>
+      </div>
     </div>
     <script src="script/app.js"></script>
   </body>
