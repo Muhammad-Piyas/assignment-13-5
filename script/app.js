@@ -107,3 +107,38 @@ async function handleSearch() {
     toggleLoader(false);
   }
 }
+// 5
+async function showDetails(id) {
+  try {
+    const res = await fetch(`${SINGLE_ISSUE_API}${id}`);
+    const issue = await res.json();
+
+    const modal = document.getElementById("issue_modal");
+    const content = document.getElementById("modal-content");
+
+    const statusColor =
+      issue.status === "open" ? "badge-success" : "badge-secondary";
+
+    content.innerHTML = `
+            <h2 class="text-xl font-bold mb-2">${issue.title}</h2>
+            <div class="flex items-center gap-2 mb-4">
+                <span class="badge ${statusColor} text-white font-bold text-xs uppercase">${issue.status}</span>
+                <span class="text-xs text-gray-400">Opened by <b class="text-gray-700">${issue.author}</b> • ${issue.createdAt}</span>
+            </div>
+            <p class="text-gray-600 text-sm leading-relaxed mb-6 bg-gray-50 p-4 rounded-xl border border-gray-100">${issue.description}</p>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="p-3 bg-gray-50 rounded-lg border border-gray-100">
+                    <p class="text-[10px] text-gray-400 font-bold uppercase mb-1">Assignee:</p>
+                    <p class="font-bold text-gray-800 text-sm italic">Fahim Ahmed</p>
+                </div>
+                <div class="p-3 bg-gray-50 rounded-lg border border-gray-100">
+                    <p class="text-[10px] text-gray-400 font-bold uppercase mb-1">Priority:</p>
+                    <span class="badge badge-error text-white font-bold text-[10px] uppercase">${issue.priority}</span>
+                </div>
+            </div>
+        `;
+    modal.showModal();
+  } catch (err) {
+    alert("Unable to load issue details.");
+  }
+}
