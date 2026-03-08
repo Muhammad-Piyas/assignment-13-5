@@ -111,11 +111,11 @@ function displayIssues(issues) {
 
     <div class="flex gap-2 mt-4">
         <span class="text-[9px] font-bold border border-red-200 text-red-400 px-2 py-1 rounded uppercase">
-            BUG
+         <i class="fa-solid fa-bug"></i> BUG
         </span>
 
         <span class="text-[9px] font-bold border border-orange-200 text-orange-400 px-2 py-1 rounded uppercase">
-            HELP WANTED
+          <i class="fa-solid fa-life-ring"></i> HELP WANTED
         </span>
     </div>
 
