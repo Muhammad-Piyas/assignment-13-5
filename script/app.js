@@ -45,7 +45,8 @@ async function loadData() {
 function displayIssues(issues) {
   const container = document.getElementById("issues-container");
   const countEl = document.getElementById("issue-count");
-  if (!container) return;
+
+  if (!container || !countEl) return;
 
   const issueLength = issues ? issues.length : 0;
   countEl.innerText = `${issueLength} Issues`;
@@ -63,26 +64,71 @@ function displayIssues(issues) {
         ? "border-t-green-500"
         : "border-t-purple-500";
 
+    const priority = issue.priority ? issue.priority.toLowerCase() : "low";
+
+    let priorityColor = "";
+    let iconUrl = "";
+
+    if (priority === "high") {
+      priorityColor = "text-red-500 border-red-300";
+      iconUrl = "assets/Open-Status.png";
+    } else if (priority === "medium") {
+      priorityColor = "text-orange-500 border-orange-300";
+      iconUrl = "assets/Open-Status.png";
+    } else {
+      priorityColor = "text-gray-500 border-gray-300";
+      iconUrl = "assets/Closed- Status .png";
+    }
+
     const card = document.createElement("div");
-    card.className = `card bg-white shadow-sm border border-gray-100 border-t-4 ${borderClass} hover:shadow-lg cursor-pointer transition p-5`;
+
+    card.className = `bg-white shadow-sm border border-gray-100 border-t-4 ${borderClass} 
+      hover:shadow-lg cursor-pointer transition p-5 
+      flex flex-col h-full rounded-xl`;
+
     card.onclick = () => showDetails(issue.id);
 
     card.innerHTML = `
-            <div class="flex justify-between items-start mb-3">
-                <span class="text-[10px] font-bold uppercase px-2 py-1 bg-gray-100 rounded text-gray-500">${issue.priority || "NORMAL"}</span>
-                <span class="text-[10px] text-gray-300">#${issue.id}</span>
-            </div>
-            <h3 class="font-bold text-sm text-gray-800 mb-2 line-clamp-2">${issue.title}</h3>
-            <p class="text-[11px] text-gray-500 mb-6 line-clamp-3">${issue.description || "No description provided."}</p>
-            <div class="flex gap-1 mb-4">
-                <span class="badge badge-outline border-red-200 text-red-400 text-[9px] font-bold p-2 uppercase">BUG</span>
-                <span class="badge badge-outline border-orange-200 text-orange-400 text-[9px] font-bold p-2 uppercase">HELP WANTED</span>
-            </div>
-            <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
-                <span class="text-[10px] font-semibold text-gray-500 italic">By @${issue.author || "unknown"}</span>
-                <span class="text-[10px] text-gray-400">${issue.createdAt || ""}</span>
-            </div>
-        `;
+    
+    <div class="flex justify-between items-center mb-4">
+        <div class="flex items-center justify-center w-6 h-6">
+            <img src="${iconUrl}" class="w-5 h-5 object-contain" alt="status">
+        </div>
+
+        <span class="text-[10px] font-bold uppercase px-3 py-1 rounded-full border ${priorityColor}">
+            ${issue.priority || "LOW"}
+        </span>
+    </div>
+
+    <h3 class="font-bold text-sm text-gray-800 mb-2 line-clamp-2">
+        ${issue.title}
+    </h3>
+
+    <p class="text-[11px] text-gray-500 mb-6 line-clamp-3">
+        ${issue.description || "No description provided."}
+    </p>
+
+    <div class="flex gap-2 mb-4">
+        <span class="text-[9px] font-bold border border-red-200 text-red-400 px-2 py-1 rounded uppercase">
+            BUG
+        </span>
+
+        <span class="text-[9px] font-bold border border-orange-200 text-orange-400 px-2 py-1 rounded uppercase">
+            HELP WANTED
+        </span>
+    </div>
+
+    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+        <span class="text-[10px] font-semibold text-gray-500 italic">
+            By @${issue.author || "unknown"}
+        </span>
+
+        <span class="text-[10px] text-gray-400">
+            ${issue.createdAt || ""}
+        </span>
+    </div>
+    `;
+
     container.appendChild(card);
   });
 }
@@ -142,3 +188,26 @@ async function showDetails(id) {
     alert("Unable to load issue details.");
   }
 }
+
+// 6
+function filterIssues(status) {
+  const buttons = document.querySelectorAll(".tab-btn");
+  buttons.forEach((btn) => btn.classList.remove("bg-[#6366F1]", "text-white"));
+
+  const activeBtn = document.getElementById(`tab-${status}`);
+  if (activeBtn) activeBtn.classList.add("bg-[#6366F1]", "text-white");
+
+  if (status === "all") {
+    displayIssues(allIssues);
+  } else {
+    const filtered = allIssues.filter((i) => i.status.toLowerCase() === status);
+    displayIssues(filtered);
+  }
+}
+
+function toggleLoader(show) {
+  const loader = document.getElementById("loader");
+  if (loader) loader.classList.toggle("hidden", !show);
+}
+
+loadData();
