@@ -59,56 +59,57 @@ function displayIssues(issues) {
   }
 
   issues.forEach((issue) => {
-    const borderClass =
-      issue.status.toLowerCase() === "open"
-        ? "border-t-green-500"
-        : "border-t-purple-500";
+    let borderClass = "";
+    let iconUrl = "";
+
+    if (issue.status.toLowerCase() === "open") {
+      borderClass = "border-t-green-500";
+      iconUrl = "assets/Open-Status.png";
+    } else {
+      borderClass = "border-t-purple-500";
+      iconUrl = "assets/Closed- Status .png";
+    }
 
     const priority = issue.priority ? issue.priority.toLowerCase() : "low";
 
     let priorityColor = "";
-    let iconUrl = "";
 
     if (priority === "high") {
       priorityColor = "text-red-500 border-red-300";
-      iconUrl = "assets/Open-Status.png";
     } else if (priority === "medium") {
       priorityColor = "text-orange-500 border-orange-300";
-      iconUrl = "assets/Open-Status.png";
     } else {
       priorityColor = "text-gray-500 border-gray-300";
-      iconUrl = "assets/Closed- Status .png";
     }
 
     const card = document.createElement("div");
 
-    card.className = `bg-white shadow-sm border border-gray-100 border-t-4 ${borderClass} 
-      hover:shadow-lg cursor-pointer transition p-5 
-      flex flex-col h-full rounded-xl`;
+    card.className = `bg-white shadow-sm border border-gray-100 border-t-4 ${borderClass}
+    hover:shadow-lg cursor-pointer transition p-5
+    flex flex-col h-full rounded-xl`;
 
     card.onclick = () => showDetails(issue.id);
 
     card.innerHTML = `
     
     <div class="flex justify-between items-center mb-4">
-        <div class="flex items-center justify-center w-6 h-6">
-            <img src="${iconUrl}" class="w-5 h-5 object-contain" alt="status">
-        </div>
-
+        <img src="${iconUrl}" class="w-5 h-5" alt="">
         <span class="text-[10px] font-bold uppercase px-3 py-1 rounded-full border ${priorityColor}">
             ${issue.priority || "LOW"}
         </span>
     </div>
 
-    <h3 class="font-bold text-sm text-gray-800 mb-2 line-clamp-2">
-        ${issue.title}
-    </h3>
+    <div class="flex-grow">
+        <h3 class="font-bold text-sm text-gray-800 mb-2 line-clamp-2">
+            ${issue.title}
+        </h3>
 
-    <p class="text-[11px] text-gray-500 mb-6 line-clamp-3">
-        ${issue.description || "No description provided."}
-    </p>
+        <p class="text-[11px] text-gray-500 line-clamp-3">
+            ${issue.description || "No description provided."}
+        </p>
+    </div>
 
-    <div class="flex gap-2 mb-4">
+    <div class="flex gap-2 mt-4">
         <span class="text-[9px] font-bold border border-red-200 text-red-400 px-2 py-1 rounded uppercase">
             BUG
         </span>
@@ -118,7 +119,7 @@ function displayIssues(issues) {
         </span>
     </div>
 
-    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+    <div class="flex items-center justify-between pt-4 mt-4 border-t border-gray-100">
         <span class="text-[10px] font-semibold text-gray-500 italic">
             By @${issue.author || "unknown"}
         </span>

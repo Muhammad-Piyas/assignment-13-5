@@ -104,12 +104,26 @@
       </div>
       <div
         id="issues-container"
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
       ></div>
       <div id="loader" class="hidden flex justify-center py-24">
         <span class="loading loading-spinner loading-lg text-[#6366F1]"></span>
       </div>
     </main>
+    <dialog id="issue_modal" class="modal">
+      <div
+        class="modal-box w-11/12 max-w-2xl rounded-2xl border-t-8 border-[#6366F1]"
+      >
+        <div id="modal-content"></div>
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn bg-[#6366F1] text-white border-none px-8">
+              Close
+            </button>
+          </form>
+        </div>
+      </div>
+    </dialog>
 
     <script src="script/app.js"></script>
   </body>
