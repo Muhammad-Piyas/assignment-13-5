@@ -86,3 +86,24 @@ function displayIssues(issues) {
     container.appendChild(card);
   });
 }
+
+// 4
+async function handleSearch() {
+  const query = document.getElementById("search-input").value;
+  if (!query) {
+    loadData();
+    return;
+  }
+
+  toggleLoader(true);
+  try {
+    const res = await fetch(`${SEARCH_API}${query}`);
+    const data = await res.json();
+    const searchResults = Array.isArray(data) ? data : data.data || [];
+    displayIssues(searchResults);
+  } catch (err) {
+    console.error("There was a problem searching:", err);
+  } finally {
+    toggleLoader(false);
+  }
+}
