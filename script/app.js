@@ -1,7 +1,7 @@
-const ALL_ISSUES_API = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
-const SEARCH_API =
+const all_issues_api = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
+const search_api =
   "https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=";
-const SINGLE_ISSUE_API = "https://phi-lab-server.vercel.app/api/v1/lab/issue/";
+const single_issue_api = "https://phi-lab-server.vercel.app/api/v1/lab/issue/";
 
 let allIssues = [];
 
@@ -27,7 +27,7 @@ async function loadData() {
 
   toggleLoader(true);
   try {
-    const res = await fetch(ALL_ISSUES_API);
+    const res = await fetch(all_issues_api);
     const data = await res.json();
 
     // Checking API response (if data is an object rather than a direct array)
@@ -144,7 +144,7 @@ async function handleSearch() {
 
   toggleLoader(true);
   try {
-    const res = await fetch(`${SEARCH_API}${query}`);
+    const res = await fetch(`${search_api}${query}`);
     const data = await res.json();
     const searchResults = Array.isArray(data) ? data : data.data || [];
     displayIssues(searchResults);
@@ -157,8 +157,9 @@ async function handleSearch() {
 // 5
 async function showDetails(id) {
   try {
-    const res = await fetch(`${SINGLE_ISSUE_API}${id}`);
-    const issue = await res.json();
+    const res = await fetch(`${single_issue_api}${id}`);
+    const data = await res.json();
+    const issue = data.data; // API response structure
 
     const modal = document.getElementById("issue_modal");
     const content = document.getElementById("modal-content");
@@ -167,23 +168,50 @@ async function showDetails(id) {
       issue.status === "open" ? "badge-success" : "badge-secondary";
 
     content.innerHTML = `
-            <h2 class="text-xl font-bold mb-2">${issue.title}</h2>
-            <div class="flex items-center gap-2 mb-4">
-                <span class="badge ${statusColor} text-white font-bold text-xs uppercase">${issue.status}</span>
-                <span class="text-xs text-gray-400">Opened by <b class="text-gray-700">${issue.author}</b> • ${issue.createdAt}</span>
-            </div>
-            <p class="text-gray-600 text-sm leading-relaxed mb-6 bg-gray-50 p-4 rounded-xl border border-gray-100">${issue.description}</p>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="p-3 bg-gray-50 rounded-lg border border-gray-100">
-                    <p class="text-[10px] text-gray-400 font-bold uppercase mb-1">Assignee:</p>
-                    <p class="font-bold text-gray-800 text-sm italic">Fahim Ahmed</p>
-                </div>
-                <div class="p-3 bg-gray-50 rounded-lg border border-gray-100">
-                    <p class="text-[10px] text-gray-400 font-bold uppercase mb-1">Priority:</p>
-                    <span class="badge badge-error text-white font-bold text-[10px] uppercase">${issue.priority}</span>
-                </div>
-            </div>
-        `;
+      <h2 class="text-xl font-bold mb-2">${issue.title}</h2>
+
+      <div class="flex items-center gap-2 mb-4">
+        <span class="badge ${statusColor} text-white font-bold text-xs uppercase">
+          ${issue.status}
+        </span>
+
+        <span class="text-xs text-gray-400">
+          Opened by <b class="text-gray-700">${issue.author}</b>  • ${issue.createdAt}
+        </span>
+      </div>
+
+        <div class="flex gap-2 mt-4">
+        <span class="text-[9px] font-bold border border-red-200 text-red-400 px-2 py-1 rounded uppercase">
+         <i class="fa-solid fa-bug"></i> BUG
+        </span>
+
+        <span class="text-[9px] font-bold border border-orange-200 text-orange-400 px-2 py-1 rounded uppercase">
+          <i class="fa-solid fa-life-ring"></i> HELP WANTED
+        </span>
+    </div>
+
+
+      <p class="text-gray-600 text-sm leading-relaxed mb-6 bg-gray-50 p-4 rounded-xl border border-gray-100">
+        ${issue.description}
+      </p>
+
+      <div class="grid grid-cols-2 gap-4">
+
+        <div class="p-3 bg-gray-50 rounded-lg border border-gray-100">
+          <p class="text-[10px] text-gray-400 font-bold uppercase mb-1">Assignee:</p>
+          <p class="font-bold text-gray-800 text-sm italic">${issue.author}</p>
+        </div>
+
+        <div class="p-3 bg-gray-50 rounded-lg border border-gray-100">
+          <p class="text-[10px] text-gray-400 font-bold uppercase mb-1">Priority:</p>
+          <span class="badge badge-error text-white font-bold text-[10px] uppercase">
+            ${issue.priority}
+          </span>
+        </div>
+
+      </div>
+    `;
+
     modal.showModal();
   } catch (err) {
     alert("Unable to load issue details.");
