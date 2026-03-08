@@ -55,20 +55,23 @@
         class="flex justify-center md:justify-start gap-2 mb-8 bg-white p-2 rounded-lg shadow-sm"
       >
         <button
+          id="tab-all"
           onclick="filterIssues('all')"
-          class="btn btn-sm bg-[#6366F1] text-white border-none px-6"
+          class="tab-btn btn btn-sm bg-[#6366F1] text-white border-none px-6"
         >
           All
         </button>
         <button
+          id="tab-open"
           onclick="filterIssues('open')"
-          class="btn btn-sm btn-ghost px-6 border border-gray-200"
+          class="tab-btn btn btn-sm btn-ghost px-6 border border-gray-100"
         >
           Open
         </button>
         <button
+          id="tab-closed"
           onclick="filterIssues('closed')"
-          class="btn btn-sm btn-ghost px-6 border border-gray-200"
+          class="tab-btn btn btn-sm btn-ghost px-6 border border-gray-100"
         >
           Closed
         </button>
