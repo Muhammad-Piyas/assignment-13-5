@@ -121,7 +121,7 @@ function displayIssues(issues) {
 
     <div class="flex items-center justify-between pt-4 mt-4 border-t border-gray-100">
         <span class="text-[10px] font-semibold text-gray-500 italic">
-            By @${issue.author || "unknown"}
+            By ${issue.author || "unknown"}
         </span>
 
         <span class="text-[10px] text-gray-400">
