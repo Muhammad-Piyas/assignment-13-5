@@ -176,7 +176,7 @@ async function showDetails(id) {
         </span>
 
         <span class="text-xs text-gray-400">
-          Opened by <b class="text-gray-700">${issue.author}</b>  • ${issue.createdAt}
+         Opened by <b class="text-gray-700">${issue.author}</b>  • ${issue.createdAt}
         </span>
       </div>
 
@@ -189,9 +189,9 @@ async function showDetails(id) {
           <i class="fa-solid fa-life-ring"></i> HELP WANTED
         </span>
     </div>
-
-
-      <p class="text-gray-600 text-sm leading-relaxed mb-6 bg-gray-50 p-4 rounded-xl border border-gray-100">
+      
+       
+      <p class="text-gray-600 text-sm leading-relaxed mb-5 mt-3 bg-gray-50 p-4 rounded-xl border border-gray-100">
         ${issue.description}
       </p>
 
